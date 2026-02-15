@@ -40,30 +40,21 @@ echo "Installing Wine..."
 brew install --cask --no-quarantine wine-stable || brew install wine
 
 ########################################
-# Download File From Google Drive
+# Download Pro Soccer Online.zip from Google Drive (large file method)
 ########################################
 FILEID="1ruGnqm_660ghSLC5EMQoQ2SEjhbuZeng"
 ZIP_NAME="Pro Soccer Online.zip"
 
-echo "Downloading Pro Soccer Online..."
+echo "Downloading Pro Soccer Online (2.4GB)..."
 
-TMP_COOKIE=$(mktemp)
+# Step 1: Get confirm token from Google Drive
+CONFIRM=$(curl -s -L \
+"https://drive.google.com/uc?export=download&id=${FILEID}" \
+| grep -o 'confirm=[^&]*' | head -n1 | sed 's/confirm=//')
 
-curl -c "$TMP_COOKIE" \
-  "https://drive.google.com/uc?export=download&id=${FILEID}" \
-  -o response.html
-
-CONFIRM=$(grep -o 'confirm=[^&]*' response.html | sed 's/confirm=//')
-
-if [ -n "$CONFIRM" ]; then
-    curl -Lb "$TMP_COOKIE" \
-      "https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILEID}" \
-      -o "$ZIP_NAME"
-else
-    mv response.html "$ZIP_NAME"
-fi
-
-rm -f "$TMP_COOKIE"
+# Step 2: Download the actual file (resume capable)
+curl -L -C - -o "$ZIP_NAME" \
+"https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILEID}"
 
 ########################################
 # Extract ZIP
@@ -91,5 +82,5 @@ rm -f "$ZIP_NAME"
 
 echo "===================================="
 echo " Install complete!"
-echo " Sign into Steam, download PSO and it will work!"
+echo " Run 'Pro Soccer Online' from your Applications folder, sign into Steam, and download PSO — it will work!"
 echo "===================================="
