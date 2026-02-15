@@ -47,7 +47,8 @@ MEDIAFIRE_URL="https://download1472.mediafire.com/wm6ewfgc2hag87VGvcB2xeXffePH0k
 
 echo "Downloading Pro Soccer Online (2.4GB)…"
 
-curl -L -C - -o "$ZIP_NAME" "$MEDIAFIRE_URL"
+# Fixed: remove -C - because MediaFire does not support resuming
+curl -L -o "$ZIP_NAME" "$MEDIAFIRE_URL"
 
 ########################################
 # Extract ZIP
