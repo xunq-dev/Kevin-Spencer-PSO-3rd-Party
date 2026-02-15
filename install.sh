@@ -40,21 +40,14 @@ echo "Installing Wine..."
 brew install --cask --no-quarantine wine-stable || brew install wine
 
 ########################################
-# Download Pro Soccer Online.zip from Google Drive (large file method)
+# Download Pro Soccer Online.zip from MediaFire
 ########################################
-FILEID="1ruGnqm_660ghSLC5EMQoQ2SEjhbuZeng"
 ZIP_NAME="Pro Soccer Online.zip"
+MEDIAFIRE_URL="https://www.mediafire.com/file/ddgqg3nk7k7iwst/Pro+Soccer+Online.zip/file"
 
 echo "Downloading Pro Soccer Online (2.4GB)..."
 
-# Step 1: Get confirm token from Google Drive
-CONFIRM=$(curl -s -L \
-"https://drive.google.com/uc?export=download&id=${FILEID}" \
-| grep -o 'confirm=[^&]*' | head -n1 | sed 's/confirm=//')
-
-# Step 2: Download the actual file (resume capable)
-curl -L -C - -o "$ZIP_NAME" \
-"https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILEID}"
+curl -L -C - -o "$ZIP_NAME" "$MEDIAFIRE_URL"
 
 ########################################
 # Extract ZIP
