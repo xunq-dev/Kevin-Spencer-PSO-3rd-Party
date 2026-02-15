@@ -9,7 +9,7 @@ echo "===================================="
 # Install Homebrew (if not installed)
 ########################################
 if ! command -v brew &>/dev/null; then
-    echo "Homebrew not found. Installing Homebrew..."
+    echo "Homebrew not found. Installing Homebrew…"
 
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -27,7 +27,7 @@ fi
 # Install Rosetta (Apple Silicon only)
 ########################################
 if [[ $(uname -m) == "arm64" ]]; then
-    echo "Installing Rosetta..."
+    echo "Installing Rosetta (if needed)…"
     /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
 fi
 
@@ -36,23 +36,23 @@ brew update
 ########################################
 # Install Wine
 ########################################
-echo "Installing Wine..."
+echo "Installing Wine…"
 brew install --cask --no-quarantine wine-stable || brew install wine
 
 ########################################
 # Download Pro Soccer Online.zip from MediaFire
 ########################################
 ZIP_NAME="Pro Soccer Online.zip"
-MEDIAFIRE_URL="https://www.mediafire.com/file/ddgqg3nk7k7iwst/Pro+Soccer+Online.zip/file"
+MEDIAFIRE_URL="https://download1472.mediafire.com/wm6ewfgc2hag87VGvcB2xeXffePH0kewjmqai05p2gfgLOoOytYWlaWAG65e1zYH_jquVXKBTiQT6ASq_xdoWZyfsM8XIH2h28m29jMD5CTv_k9jcdwl4z6nqPT4Gwd-EUVJSmAg3kB-DCLdWre-VsFJvQiLmqOwHC9tWCDvRcrQ/ddgqg3nk7k7iwst/Pro+Soccer+Online.zip"
 
-echo "Downloading Pro Soccer Online (2.4GB)..."
+echo "Downloading Pro Soccer Online (2.4GB)…"
 
 curl -L -C - -o "$ZIP_NAME" "$MEDIAFIRE_URL"
 
 ########################################
 # Extract ZIP
 ########################################
-echo "Extracting..."
+echo "Extracting…"
 unzip -o "$ZIP_NAME"
 
 ########################################
@@ -65,7 +65,7 @@ if [ ! -d "$APP_NAME" ]; then
     exit 1
 fi
 
-echo "Moving $APP_NAME to /Applications..."
+echo "Moving $APP_NAME to /Applications…"
 sudo mv "$APP_NAME" /Applications/
 
 ########################################
